@@ -618,6 +618,7 @@ modifiers:
 
 
 history:
+    START: Clothes
     Clothes:
         dice: 1d10
         roll:
