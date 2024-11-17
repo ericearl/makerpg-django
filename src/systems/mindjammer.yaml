@@ -1,0 +1,41 @@
+system:
+    name: Mindjammer - The Roleplaying Game
+    copyright: 2014, 2015, 2016
+    publisher: Mindjammer Press Ltd
+
+
+colors:
+    background: black
+    buttons: dark gray
+    active: light gray
+    font: Alegraya Sans
+
+
+order:
+    - about: High Concept
+    - about: Trouble
+    - about: Aspects
+    - name: Name
+    - about: Appearance
+    - assign: Approaches
+    - about: Stunts
+
+
+High Concept:
+    prompt: Sum up your character in a nutshell
+    ai: Summarize a single role playing game character's being or personality in a short sentence # in a [setting] setting
+
+
+Trouble:
+    prompt: What always gets them into trouble?
+    ai:
+        - In one short sentence summarize a possible role playing game character's personal weakness that always makes the character's life more complicated
+        - In one short sentence summarize a possible role playing game character's recurring enemy that always makes the character's life more complicated
+        - In one short sentence summarize a possible role playing game character's important obligation that always makes the character's life more complicated
+
+
+Aspects:
+    prompt: Describe something central to your character
+    ai: In a single phrase or one short sentence to describe something centrally important to a role playing game character
+
+

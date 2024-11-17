@@ -1,0 +1,84 @@
+system:
+    name: Fate Accelerated
+    copyright: 2013
+    publisher: Evil Hat Productions, LLC
+
+
+colors:
+    background: black
+    buttons: dark gray
+    active: light gray
+    font: Alegraya Sans
+
+
+order:
+    - about: High Concept
+    - about: Trouble
+    - about: Aspects
+    - name: Name
+    - about: Appearance
+    - assign: Approaches
+    - about: Stunts
+
+
+High Concept:
+    prompt: Sum up your character in a nutshell
+    ai: Summarize a single role playing game character's being or personality in a short sentence # in a [setting] setting
+
+
+Trouble:
+    prompt: What always gets them into trouble?
+    ai:
+        - In one short sentence summarize a possible role playing game character's personal weakness that always makes the character's life more complicated
+        - In one short sentence summarize a possible role playing game character's recurring enemy that always makes the character's life more complicated
+        - In one short sentence summarize a possible role playing game character's important obligation that always makes the character's life more complicated
+
+
+Aspects:
+    prompt: Describe something central to your character
+    ai: In a single phrase or one short sentence to describe something centrally important to a role playing game character
+
+
+Name:
+    prompt: What is your character's name?
+    ai: Give me a name for a role playing game character
+
+
+Appearance:
+    prompt: How does your character look?
+    ai: In a paragraph describe a new role playing game character's outward appearance
+
+
+# # RANDOM ASSIGN "these" into "those"
+# perms = list(itertools.permutations(those, len(those)))
+#
+# d = []
+# for p in perms:
+#     d.append(dict(zip(p, these)))
+#
+# assignments = random.choice(d)
+
+Approaches:
+    prompt: Choose your Approaches
+    these:
+        - "+3"
+        - "+2"
+        - "+2"
+        - "+1"
+        - "+1"
+        - "+0"
+    those:
+        - Careful
+        - Clever
+        - Flashy
+        - Forceful
+        - Quick
+        - Sneaky
+
+
+Stunts:
+    prompt: What tricks, maneuvers, or techniques do they have?
+    ai:
+        - In one short sentence describe a new role playing game character's special trick that they do better than others
+        - In one short sentence describe a new role playing game character's special maneuver that they do better than others
+        - In one short sentence describe a new role playing game character's special technique that they do better than others
