@@ -11,81 +11,6 @@ class Archetype(models.Model):
         return self.name
 
 
-class Character(models.Model):
-    name = models.CharField(default='0', unique=True, max_length=500, validators=[MinLengthValidator(1)])
-    role = models.ForeignKey(Role, null=True, on_delete=models.CASCADE)
-    archetype = models.ForeignKey(Archetype, null=True, on_delete=models.CASCADE)
-
-    def __str__(self):
-        if self.archetype and self.archetype.name != 'none' and self.role and self.role.name != 'none':
-            return '[' + self.archetype.name + ' ' + self.role.name + '] ' + self.name
-        elif self.role and self.role.name != 'none':
-            return '[' + self.role.name + '] ' + self.name
-        elif self.archetype and self.archetype.name != 'none':
-            return '[' + self.archetype.name + '] ' + self.name
-        else:
-            return self.name
-
-
-class CharacterEventRoll(models.Model):
-    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
-    eventroll = models.ForeignKey(EventRoll, null=True, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.eventroll)
-
-
-class CharacterPointpool(models.Model):
-    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
-    pointpool = models.ForeignKey(Pointpool, null=True, on_delete=models.CASCADE)
-    current = models.IntegerField(default=0)
-    total = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.pointpool.name + ': ' + str(self.current) + '/' + str(self.total)
-
-
-class CharacterSkill(models.Model):
-    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
-    skill = models.ForeignKey(Skill, null=True, on_delete=models.CASCADE)
-    current = models.IntegerField(default=0)
-    minimum = models.IntegerField(null=True)
-    maximum = models.IntegerField(null=True)
-
-    def __str__(self):
-        if self.skill.statistic:
-            return '[' + self.skill.statistic.name + '] ' + self.skill.name + ' (' + str(self.skill.cost) + '): ' + str(self.current)
-        elif self.skill.role:
-            return '[' + self.skill.role.name + '] ' + self.skill.name + ' (' + str(self.skill.cost) + '): ' + str(self.current)
-        else:
-            return self.skill.name + ' (' + str(self.skill.cost) + '): ' + str(self.current)
-
-
-class CharacterStatistic(models.Model):
-    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
-    statistic = models.ForeignKey(Statistic, null=True, on_delete=models.CASCADE)
-    current = models.IntegerField(default=0)
-    minimum = models.IntegerField(null=True)
-    maximum = models.IntegerField(null=True)
-
-    def __str__(self):
-        return self.statistic.name + ' (' + str(self.statistic.cost) + '): ' + str(self.current)
-
-
-class CharacterTrait(models.Model):
-    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
-    trait = models.ForeignKey(Trait, null=True, on_delete=models.CASCADE)
-    current = models.IntegerField(default=0)
-    minimum = models.IntegerField(null=True)
-    maximum = models.IntegerField(null=True)
-
-    def __str__(self):
-        if self.trait.category:
-            return '[' + self.trait.category.name + '] ' + self.trait.name + ' (' + str(self.trait.cost) + '): ' + str(self.current)
-        else:
-            return self.trait.name + ' (' + str(self.trait.cost) + '): ' + str(self.current)
-
-
 class Dice(models.Model):
     string = models.CharField(max_length=500, null=True, validators=[MinLengthValidator(1)])
     quantity = models.IntegerField(default=1)
@@ -106,6 +31,29 @@ class Dice(models.Model):
             total += random.choice(range(self.sides)) + 1
 
         return total + self.offset
+
+
+class Role(models.Model):
+    name = models.CharField(default='0', unique=True, max_length=500, validators=[MinLengthValidator(1)])
+
+    def __str__(self):
+        return self.name
+
+
+class Character(models.Model):
+    name = models.CharField(default='0', unique=True, max_length=500, validators=[MinLengthValidator(1)])
+    role = models.ForeignKey(Role, null=True, on_delete=models.CASCADE)
+    archetype = models.ForeignKey(Archetype, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        if self.archetype and self.archetype.name != 'none' and self.role and self.role.name != 'none':
+            return '[' + self.archetype.name + ' ' + self.role.name + '] ' + self.name
+        elif self.role and self.role.name != 'none':
+            return '[' + self.role.name + '] ' + self.name
+        elif self.archetype and self.archetype.name != 'none':
+            return '[' + self.archetype.name + '] ' + self.name
+        else:
+            return self.name
 
 
 class Event(models.Model):
@@ -136,6 +84,14 @@ class EventRoll(models.Model):
             return self.mainevent.name + ' (' + str(self.roll) + ')'
 
 
+class CharacterEventRoll(models.Model):
+    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
+    eventroll = models.ForeignKey(EventRoll, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.eventroll)
+
+
 class NPCEvent(models.Model):
     current = models.ForeignKey(Event, null=True, on_delete=models.CASCADE, related_name='CurrentNPCEvent')
     next = models.ForeignKey(Event, null=True, on_delete=models.CASCADE, related_name='NextNPCEvent')
@@ -160,11 +116,40 @@ class Pointpool(models.Model):
         return self.name
 
 
-class Role(models.Model):
+class CharacterPointpool(models.Model):
+    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
+    pointpool = models.ForeignKey(Pointpool, null=True, on_delete=models.CASCADE)
+    current = models.IntegerField(default=0)
+    total = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.pointpool.name + ': ' + str(self.current) + '/' + str(self.total)
+
+
+class Statistic(models.Model):
     name = models.CharField(default='0', unique=True, max_length=500, validators=[MinLengthValidator(1)])
+    direction = models.CharField(max_length=100, choices=DIRECTION_CHOICES, default=INC)
+    cost = models.IntegerField(default=0)
+    tier = models.IntegerField(choices=TIER_CHOICES, default=0)
+    type = models.CharField(max_length=100, choices=TYPE_CHOICES, default=IND)
+    purchase = models.IntegerField(default=0)
+    role = models.ForeignKey(Role, null=True, on_delete=models.CASCADE)
+    archetype = models.ForeignKey(Archetype, null=True, on_delete=models.CASCADE)
+    pointpool = models.ForeignKey(Pointpool, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+
+
+class CharacterStatistic(models.Model):
+    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
+    statistic = models.ForeignKey(Statistic, null=True, on_delete=models.CASCADE)
+    current = models.IntegerField(default=0)
+    minimum = models.IntegerField(null=True)
+    maximum = models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.statistic.name + ' (' + str(self.statistic.cost) + '): ' + str(self.current)
 
 
 class Skill(models.Model):
@@ -187,16 +172,50 @@ class Skill(models.Model):
             return self.name
 
 
-class Statistic(models.Model):
+class CharacterSkill(models.Model):
+    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
+    skill = models.ForeignKey(Skill, null=True, on_delete=models.CASCADE)
+    current = models.IntegerField(default=0)
+    minimum = models.IntegerField(null=True)
+    maximum = models.IntegerField(null=True)
+
+    def __str__(self):
+        if self.skill.statistic:
+            return '[' + self.skill.statistic.name + '] ' + self.skill.name + ' (' + str(self.skill.cost) + '): ' + str(self.current)
+        elif self.skill.role:
+            return '[' + self.skill.role.name + '] ' + self.skill.name + ' (' + str(self.skill.cost) + '): ' + str(self.current)
+        else:
+            return self.skill.name + ' (' + str(self.skill.cost) + '): ' + str(self.current)
+
+
+class System(models.Model):
+    name = models.CharField(default='0', max_length=500, validators=[MinLengthValidator(1)])
+    edition = models.CharField(default='0', max_length=500, validators=[MinLengthValidator(1)])
+    copyright = models.CharField(default='0', max_length=500, validators=[MinLengthValidator(1)])
+    publisher = models.CharField(default='0', max_length=500, validators=[MinLengthValidator(1)])
+    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        if self.edition and self.publisher and self.copyright:
+            return self.name + ' (' + self.edition + '), published by ' + self.publisher + ' (c) ' + self.copyright
+        elif self.edition and self.publisher:
+            return self.name + ' (' + self.edition + '), published by ' + self.publisher
+        elif self.edition and self.copyright:
+            return self.name + ' (' + self.edition + ') (c) ' + self.copyright
+        elif self.publisher and self.copyright:
+            return self.name + ', published by ' + self.publisher + ' (c) ' + self.copyright
+        elif self.edition:
+            return self.name + ' (' + self.edition + ')'
+        elif self.publisher:
+            return self.name + ', published by ' + self.publisher
+        elif self.copyright:
+            return self.name + ' (c) ' + self.copyright
+        else:
+            return self.name
+
+
+class TraitCategory(models.Model):
     name = models.CharField(default='0', unique=True, max_length=500, validators=[MinLengthValidator(1)])
-    direction = models.CharField(max_length=100, choices=DIRECTION_CHOICES, default=INC)
-    cost = models.IntegerField(default=0)
-    tier = models.IntegerField(choices=TIER_CHOICES, default=0)
-    type = models.CharField(max_length=100, choices=TYPE_CHOICES, default=IND)
-    purchase = models.IntegerField(default=0)
-    role = models.ForeignKey(Role, null=True, on_delete=models.CASCADE)
-    archetype = models.ForeignKey(Archetype, null=True, on_delete=models.CASCADE)
-    pointpool = models.ForeignKey(Pointpool, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -217,9 +236,16 @@ class Trait(models.Model):
         return self.name
 
 
-class TraitCategory(models.Model):
-    name = models.CharField(default='0', unique=True, max_length=500, validators=[MinLengthValidator(1)])
+class CharacterTrait(models.Model):
+    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
+    trait = models.ForeignKey(Trait, null=True, on_delete=models.CASCADE)
+    current = models.IntegerField(default=0)
+    minimum = models.IntegerField(null=True)
+    maximum = models.IntegerField(null=True)
 
     def __str__(self):
-        return self.name
+        if self.trait.category:
+            return '[' + self.trait.category.name + '] ' + self.trait.name + ' (' + str(self.trait.cost) + '): ' + str(self.current)
+        else:
+            return self.trait.name + ' (' + str(self.trait.cost) + '): ' + str(self.current)
 
