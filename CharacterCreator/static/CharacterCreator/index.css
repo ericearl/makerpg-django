@@ -115,6 +115,7 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+
 .outer-button-frame-1 {
   display: flex;
   flex-direction: column;
@@ -124,6 +125,7 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+
 .navigate-button-component-1 {
   display: flex;
   flex-direction: column;
@@ -133,6 +135,7 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
 .encircling-1 {
   display: flex;
   flex-direction: column;
@@ -145,6 +148,7 @@ body {
   box-sizing: border-box;
   background-color: rgba(68, 68, 68, 1);
 }
+
 .text-1 {
   display: flex;
   flex-direction: column;
@@ -166,6 +170,7 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+
 .navigate-button-component-2 {
   display: flex;
   flex-direction: column;
@@ -175,6 +180,7 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
 .encircling-2 {
   display: flex;
   flex-direction: column;
@@ -187,6 +193,7 @@ body {
   box-sizing: border-box;
   background-color: rgba(68, 68, 68, 1);
 }
+
 .text-2 {
   display: flex;
   flex-direction: column;
@@ -208,6 +215,7 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+
 .navigate-button-component-3 {
   display: flex;
   flex-direction: column;
@@ -217,6 +225,7 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
 .encircling-3 {
   display: flex;
   flex-direction: column;
@@ -229,6 +238,7 @@ body {
   box-sizing: border-box;
   background-color: rgba(68, 68, 68, 1);
 }
+
 .text-3 {
   display: flex;
   flex-direction: column;
@@ -250,6 +260,7 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+
 .navigate-button-component-4 {
   display: flex;
   flex-direction: column;
@@ -259,6 +270,7 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
 .encircling-4 {
   display: flex;
   flex-direction: column;
@@ -271,6 +283,7 @@ body {
   box-sizing: border-box;
   background-color: rgba(68, 68, 68, 1);
 }
+
 .text-4 {
   display: flex;
   flex-direction: column;
@@ -292,6 +305,7 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+
 .navigate-button-component-5 {
   display: flex;
   flex-direction: column;
@@ -301,6 +315,7 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
 .encircling-5 {
   display: flex;
   flex-direction: column;
@@ -313,6 +328,7 @@ body {
   box-sizing: border-box;
   background-color: rgba(68, 68, 68, 1);
 }
+
 .text-5 {
   display: flex;
   flex-direction: column;
@@ -334,6 +350,7 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+
 .navigate-button-component-6 {
   display: flex;
   flex-direction: column;
@@ -343,6 +360,7 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
 .encircling-6 {
   display: flex;
   flex-direction: column;
@@ -355,6 +373,7 @@ body {
   box-sizing: border-box;
   background-color: rgba(68, 68, 68, 1);
 }
+
 .text-6 {
   display: flex;
   flex-direction: column;
