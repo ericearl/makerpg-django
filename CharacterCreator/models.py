@@ -40,8 +40,34 @@ class Role(models.Model):
         return self.name
 
 
+class System(models.Model):
+    name = models.CharField(max_length=500, validators=[MinLengthValidator(1)])
+    edition = models.CharField(max_length=500, validators=[MinLengthValidator(1)])
+    copyright = models.CharField(max_length=500, validators=[MinLengthValidator(1)])
+    publisher = models.CharField(max_length=500, validators=[MinLengthValidator(1)])
+
+    def __str__(self):
+        if self.edition and self.publisher and self.copyright:
+            return self.name + ' (' + self.edition + '), published by ' + self.publisher + ' (c) ' + self.copyright
+        elif self.edition and self.publisher:
+            return self.name + ' (' + self.edition + '), published by ' + self.publisher
+        elif self.edition and self.copyright:
+            return self.name + ' (' + self.edition + ') (c) ' + self.copyright
+        elif self.publisher and self.copyright:
+            return self.name + ', published by ' + self.publisher + ' (c) ' + self.copyright
+        elif self.edition:
+            return self.name + ' (' + self.edition + ')'
+        elif self.publisher:
+            return self.name + ', published by ' + self.publisher
+        elif self.copyright:
+            return self.name + ' (c) ' + self.copyright
+        else:
+            return self.name
+
+
 class Character(models.Model):
     name = models.CharField(default='0', unique=True, max_length=500, validators=[MinLengthValidator(1)])
+    system = models.ForeignKey(System, null=True, on_delete=models.CASCADE)
     role = models.ForeignKey(Role, null=True, on_delete=models.CASCADE)
     archetype = models.ForeignKey(Archetype, null=True, on_delete=models.CASCADE)
 
@@ -186,32 +212,6 @@ class CharacterSkill(models.Model):
             return '[' + self.skill.role.name + '] ' + self.skill.name + ' (' + str(self.skill.cost) + '): ' + str(self.current)
         else:
             return self.skill.name + ' (' + str(self.skill.cost) + '): ' + str(self.current)
-
-
-class System(models.Model):
-    name = models.CharField(default='0', max_length=500, validators=[MinLengthValidator(1)])
-    edition = models.CharField(default='0', max_length=500, validators=[MinLengthValidator(1)])
-    copyright = models.CharField(default='0', max_length=500, validators=[MinLengthValidator(1)])
-    publisher = models.CharField(default='0', max_length=500, validators=[MinLengthValidator(1)])
-    character = models.ForeignKey(Character, null=True, on_delete=models.CASCADE)
-
-    def __str__(self):
-        if self.edition and self.publisher and self.copyright:
-            return self.name + ' (' + self.edition + '), published by ' + self.publisher + ' (c) ' + self.copyright
-        elif self.edition and self.publisher:
-            return self.name + ' (' + self.edition + '), published by ' + self.publisher
-        elif self.edition and self.copyright:
-            return self.name + ' (' + self.edition + ') (c) ' + self.copyright
-        elif self.publisher and self.copyright:
-            return self.name + ', published by ' + self.publisher + ' (c) ' + self.copyright
-        elif self.edition:
-            return self.name + ' (' + self.edition + ')'
-        elif self.publisher:
-            return self.name + ', published by ' + self.publisher
-        elif self.copyright:
-            return self.name + ' (c) ' + self.copyright
-        else:
-            return self.name
 
 
 class TraitCategory(models.Model):
