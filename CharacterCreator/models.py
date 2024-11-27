@@ -4,11 +4,16 @@ from src.globals import *
 import random
 
 
-class Archetype(models.Model):
-    name = models.CharField(default='0', unique=True, max_length=500, validators=[MinLengthValidator(1)])
+class Operation(models.Model):
+    name = models.CharField(max_length=100, choices=OPERATION_CHOICES, default=NAME)
+    alias = models.CharField(unique=True, max_length=500, validators=[MinLengthValidator(1)])
+    next = models.ForeignKey('self', on_delete=models.CASCADE, related_name='NextOperation')
 
     def __str__(self):
-        return self.name
+        if self.alias:
+            return self.alias + ' (' + self.name + ')'
+        else:
+            return self.name
 
 
 class Dice(models.Model):
@@ -31,6 +36,13 @@ class Dice(models.Model):
             total += random.choice(range(self.sides)) + 1
 
         return total + self.offset
+
+
+class Archetype(models.Model):
+    name = models.CharField(default='0', unique=True, max_length=500, validators=[MinLengthValidator(1)])
+
+    def __str__(self):
+        return self.name
 
 
 class Role(models.Model):

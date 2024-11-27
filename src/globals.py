@@ -25,3 +25,13 @@ TIER_CHOICES = (
     (9, 'nonuple'),
     (10, 'decuple'),
 )
+
+NAME = 'name'
+OPERATION_CHOICES = (
+    ('name', 'name'),
+    ('select', 'select'),
+    ('spend', 'spend'),
+    ('history', 'history'),
+    ('', ''),
+    ('', ''),
+)
