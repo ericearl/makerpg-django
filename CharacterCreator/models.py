@@ -4,18 +4,6 @@ from src.globals import *
 import random
 
 
-class Operation(models.Model):
-    name = models.CharField(max_length=100, choices=OPERATION_CHOICES, default=NAME)
-    alias = models.CharField(unique=True, max_length=500, validators=[MinLengthValidator(1)])
-    next = models.ForeignKey('self', on_delete=models.CASCADE, related_name='NextOperation')
-
-    def __str__(self):
-        if self.alias:
-            return self.alias + ' (' + self.name + ')'
-        else:
-            return self.name
-
-
 class Dice(models.Model):
     string = models.CharField(max_length=500, null=True, validators=[MinLengthValidator(1)])
     quantity = models.IntegerField(default=1)
@@ -73,6 +61,19 @@ class System(models.Model):
             return self.name + ', published by ' + self.publisher
         elif self.copyright:
             return self.name + ' (c) ' + self.copyright
+        else:
+            return self.name
+
+
+class Operation(models.Model):
+    name = models.CharField(max_length=100, choices=OPERATION_CHOICES, default=NAME)
+    alias = models.CharField(max_length=100, validators=[MinLengthValidator(1)])
+    previous = models.ForeignKey('self', null=True, on_delete=models.CASCADE, related_name='PreviousOperation')
+    system = models.ForeignKey('System', null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        if self.alias:
+            return self.alias + ' (' + self.name + ')'
         else:
             return self.name
 

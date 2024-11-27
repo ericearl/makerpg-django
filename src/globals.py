@@ -32,6 +32,6 @@ OPERATION_CHOICES = (
     ('select', 'select'),
     ('spend', 'spend'),
     ('history', 'history'),
-    ('', ''),
-    ('', ''),
+    ('about', 'about'),
+    ('assign', 'assign'),
 )

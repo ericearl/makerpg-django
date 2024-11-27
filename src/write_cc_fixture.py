@@ -39,7 +39,25 @@ def main():
         
         fixture.append(s)
         pk += 1
-    
+
+        s_pk = pk - 1
+        for i, op in enumerate(system['order']):
+            o = {'model': 'CharacterCreator.Operation', 'pk': pk, 'fields': {}}
+
+            for key, val in op.items():
+                o['fields']['name'] = key
+                o['fields']['alias'] = val
+
+            if i == 0:
+                o['fields']['previous'] = None
+            else:
+                o['fields']['previous'] = pk - 1
+
+            o['fields']['system'] = s_pk
+
+            fixture.append(o)
+            pk += 1
+
     with open(HERE.parent.joinpath('CharacterCreator/fixtures/systems.json'), 'w') as f:
         json.dump(fixture, f, indent=4)
 
